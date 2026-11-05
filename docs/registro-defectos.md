@@ -93,5 +93,6 @@ antes de la corrección y pasa después. Severidad: Crítica / Alta / Media / Ba
 - **Esperado:** archivo de texto con reglas válidas
 - **Real:** el servidor devuelve la página HTML de la aplicación
 - **Severidad:** Baja
-- **Corrección:** _pendiente_
-- **Estado:** Abierto
+- **Corrección:** `frontend/public/robots.txt` con reglas válidas (excluye páginas privadas)
+- **Re-prueba:** Lighthouse SEO 100
+- **Estado:** Cerrado
