@@ -43,8 +43,8 @@ func (s *Servidor) Rutas() http.Handler {
 	mux.HandleFunc("POST /api/admin/productos/{id}/aprobar", s.requiereRol(auth.RolAdministradora, s.aprobarProducto))
 	mux.HandleFunc("POST /api/admin/productos/{id}/rechazar", s.requiereRol(auth.RolAdministradora, s.rechazarProducto))
 
-	// TODO HU-03 Catálogo público
-	//   GET  /api/catalogo?categoria={id}
+	// HU-03 Catálogo público
+	mux.HandleFunc("GET /api/catalogo", s.catalogo)
 
 	// Imágenes subidas (solo lectura)
 	mux.Handle("GET /uploads/", sinListado(http.StripPrefix("/uploads/", http.FileServer(http.Dir(s.dirUploads)))))
