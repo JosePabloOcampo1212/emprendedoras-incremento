@@ -15,6 +15,8 @@ Versionado según [Semantic Versioning](https://semver.org/lang/es/).
 
 ### Corregido
 
+- Al cerrar sesión desde una página protegida ahora se muestra el catálogo (DEF-03).
+
 ### Seguridad
 
 - El directorio de imágenes no lista archivos (DEF-01).
