@@ -104,7 +104,7 @@ docker-compose.yml    PostgreSQL para desarrollo
 
 | Historia | Descripción | Estado |
 |---|---|---|
-| HU-01 | Registrar producto | En progreso |
+| HU-01 | Registrar producto | Hecho |
 | HU-02 | Aprobar o rechazar producto | Pendiente |
 | HU-03 | Ver catálogo público | Pendiente |
 | HU-04 | Archivar producto | Fuera de esta iteración (backlog) |
