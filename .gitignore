@@ -1,0 +1,20 @@
+# Configuración local y secretos
+.env
+.env.*
+!.env.example
+
+# Imágenes subidas en desarrollo
+backend/data/
+
+# Dependencias y compilados
+frontend/node_modules/
+frontend/dist/
+backend/bin/
+
+# Sistema y editores
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/*
+!.vscode/extensions.json
+*.log

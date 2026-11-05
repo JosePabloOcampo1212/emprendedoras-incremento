@@ -1,0 +1,251 @@
+/* Colores con contraste AA (4.5:1 o más) sobre sus fondos. */
+:root {
+  --fondo: #faf7f2;
+  --superficie: #ffffff;
+  --texto: #1f2a24;
+  --texto-suave: #4f5b55;
+  --primario: #1f5c4a;
+  --primario-oscuro: #164234;
+  --borde: #c9cfc9;
+  --error: #a3261a;
+  --error-fondo: #fbecea;
+  --foco: #c2410c;
+  --radio: 8px;
+
+  font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  font-size: 100%; /* respeta el tamaño de letra elegido por la persona */
+  line-height: 1.5;
+  color: var(--texto);
+  background: var(--fondo);
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+#root {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+h1 {
+  font-size: 1.75rem;
+  line-height: 1.2;
+  margin: 0 0 0.5rem;
+}
+
+.contenedor {
+  width: 100%;
+  max-width: 64rem;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+main.contenedor {
+  flex: 1;
+  padding-top: 2rem;
+  padding-bottom: 3rem;
+}
+
+main:focus {
+  outline: none;
+}
+
+/* Foco siempre visible para quien navega con teclado */
+:focus-visible {
+  outline: 3px solid var(--foco);
+  outline-offset: 2px;
+}
+
+.saltar {
+  position: absolute;
+  left: 1rem;
+  top: -3rem;
+  background: var(--primario);
+  color: #fff;
+  padding: 0.5rem 1rem;
+  border-radius: var(--radio);
+  z-index: 10;
+}
+
+.saltar:focus {
+  top: 1rem;
+}
+
+/* Encabezado */
+.encabezado {
+  background: var(--primario);
+  color: #fff;
+}
+
+.fila {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem 1.5rem;
+  padding-top: 0.75rem;
+  padding-bottom: 0.75rem;
+}
+
+.marca {
+  color: #fff;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.menu {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem 1.25rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.menu a,
+.menu .enlace {
+  color: #fff;
+  text-decoration: none;
+  padding: 0.25rem 0;
+  border-bottom: 2px solid transparent;
+}
+
+.menu a:hover,
+.menu .enlace:hover {
+  border-bottom-color: #fff;
+}
+
+.menu a.active {
+  border-bottom-color: #f4e9d8;
+  font-weight: 600;
+}
+
+.encabezado :focus-visible {
+  outline-color: #fff;
+}
+
+.enlace {
+  background: none;
+  border: 0;
+  font: inherit;
+  cursor: pointer;
+}
+
+/* Bloques */
+.tarjeta {
+  background: var(--superficie);
+  border: 1px solid var(--borde);
+  border-radius: var(--radio);
+  padding: 1.5rem;
+}
+
+.angosta {
+  max-width: 26rem;
+  margin: 0 auto;
+}
+
+.texto-suave {
+  color: var(--texto-suave);
+  margin-top: 0;
+}
+
+.pendiente {
+  border: 1px dashed var(--borde);
+  border-radius: var(--radio);
+  padding: 1rem;
+  color: var(--texto-suave);
+}
+
+.alerta {
+  background: var(--error-fondo);
+  color: var(--error);
+  border-left: 4px solid var(--error);
+  padding: 0.75rem 1rem;
+  border-radius: 4px;
+}
+
+/* Formularios */
+.campo {
+  margin-bottom: 1rem;
+}
+
+.campo label {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 0.25rem;
+}
+
+.campo input,
+.campo select,
+.campo textarea {
+  width: 100%;
+  font: inherit;
+  padding: 0.6rem 0.75rem;
+  border: 1px solid #7a857f; /* contraste 3:1 para bordes de controles */
+  border-radius: 6px;
+  background: #fff;
+  color: var(--texto);
+}
+
+.campo [aria-invalid='true'] {
+  border-color: var(--error);
+  border-width: 2px;
+}
+
+.campo-ayuda {
+  margin: 0 0 0.25rem;
+  font-size: 0.9rem;
+  color: var(--texto-suave);
+}
+
+.campo-error {
+  margin: 0.25rem 0 0;
+  font-size: 0.9rem;
+  color: var(--error);
+}
+
+.boton {
+  font: inherit;
+  font-weight: 600;
+  background: var(--primario);
+  color: #fff;
+  border: 0;
+  border-radius: 6px;
+  padding: 0.65rem 1.25rem;
+  cursor: pointer;
+  min-height: 44px; /* área táctil mínima */
+}
+
+.boton:hover {
+  background: var(--primario-oscuro);
+}
+
+.boton:disabled {
+  opacity: 0.7;
+  cursor: wait;
+}
+
+.pie {
+  border-top: 1px solid var(--borde);
+  color: var(--texto-suave);
+  font-size: 0.9rem;
+  padding: 1rem 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    transition: none !important;
+    animation: none !important;
+  }
+}
