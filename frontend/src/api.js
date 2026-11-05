@@ -41,7 +41,10 @@ export const api = {
   cerrarSesion: () => pedir('/api/sesion', { metodo: 'DELETE' }),
   categorias: () => pedir('/api/categorias'),
 
-  // TODO HU-01: crearProducto(formulario), misProductos()
+  // HU-01
+  crearProducto: (formulario) => pedir('/api/productos', { metodo: 'POST', formulario }),
+  misProductos: () => pedir('/api/mis-productos'),
+
   // TODO HU-02: pendientes(), aprobar(id), rechazar(id, motivo)
   // TODO HU-03: catalogo(categoriaId)
 }
