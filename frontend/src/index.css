@@ -316,3 +316,51 @@ h2 {
   margin: 0.5rem 0 0;
   font-size: 0.95rem;
 }
+
+/* ---------- HU-02: revisión ---------- */
+.revision {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: 1fr;
+}
+
+@media (min-width: 40rem) {
+  .revision {
+    grid-template-columns: 120px 1fr;
+  }
+  .revision > div:only-child {
+    grid-column: 1 / -1;
+  }
+}
+
+.miniatura {
+  width: 120px;
+  height: 120px;
+  object-fit: cover;
+  border-radius: 6px;
+  background: var(--fondo);
+}
+
+.acciones {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.boton.secundario {
+  background: #fff;
+  color: var(--primario);
+  border: 2px solid var(--primario);
+}
+
+.boton.secundario:hover {
+  background: #e7f2ed;
+}
+
+.boton.peligro {
+  background: var(--error);
+}
+
+.boton.peligro:hover {
+  background: #7f1d14;
+}
