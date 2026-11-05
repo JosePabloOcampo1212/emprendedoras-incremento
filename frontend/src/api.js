@@ -45,6 +45,10 @@ export const api = {
   crearProducto: (formulario) => pedir('/api/productos', { metodo: 'POST', formulario }),
   misProductos: () => pedir('/api/mis-productos'),
 
-  // TODO HU-02: pendientes(), aprobar(id), rechazar(id, motivo)
+  // HU-02
+  pendientes: () => pedir('/api/admin/pendientes'),
+  aprobar: (id) => pedir(`/api/admin/productos/${id}/aprobar`, { metodo: 'POST', cuerpo: {} }),
+  rechazar: (id, motivo) => pedir(`/api/admin/productos/${id}/rechazar`, { metodo: 'POST', cuerpo: { motivo } }),
+
   // TODO HU-03: catalogo(categoriaId)
 }
