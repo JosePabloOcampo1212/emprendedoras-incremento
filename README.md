@@ -72,7 +72,11 @@ cd backend && go test -coverpkg=./internal/... -cover ./...   # con cobertura to
 cd backend && go test -short ./...                            # sin la prueba de rendimiento
 cd frontend && npm test                                       # componentes y accesibilidad
 cd frontend && npm run test:cobertura                         # con cobertura
+python3 pruebas/e2e/flujo.py                                  # punta a punta (ver pruebas/e2e/README.md)
 ```
+
+El plan completo, con los casos por criterio de aceptación, está en
+`docs/plan-pruebas.md`. Los defectos encontrados están en `docs/registro-defectos.md`.
 
 Las pruebas de integración necesitan PostgreSQL encendido. Cada prueba crea
 un esquema temporal (`prueba_xxxx`) que se borra al terminar, así que no
@@ -98,8 +102,9 @@ frontend/
   src/components/     componentes reutilizables (Campo accesible, RutaProtegida)
   src/pages/          páginas
   src/validaciones.js reglas de validación del cliente
-docs/                 historias de usuario, DoR/DoD, bitácora, gestión de contenidos
+docs/                 historias, DoR/DoD, hipótesis, bitácora, contenidos, plan de pruebas, defectos
 scripts/              respaldo y restauración de la base de datos e imágenes
+pruebas/e2e/          prueba funcional de punta a punta en el navegador (Playwright)
 docker-compose.yml    PostgreSQL para desarrollo
 ```
 

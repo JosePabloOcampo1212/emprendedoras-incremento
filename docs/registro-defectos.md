@@ -1,0 +1,36 @@
+# Registro de defectos
+
+Cada defecto se corrige en su propia rama, con una prueba de regresión que falla
+antes de la corrección y pasa después. Severidad: Crítica / Alta / Media / Baja.
+
+---
+
+### DEF-01 El directorio de imágenes mostraba la lista de archivos
+
+- **Historia:** HU-01
+- **Encontrado en:** revisión de código del pull request de HU-01
+- **Entorno:** backend local, Go 1.24
+- **Pasos:** abrir `http://localhost:8080/uploads/`
+- **Esperado:** 404, sin listar archivos
+- **Real:** el servidor mostraba el nombre de todas las imágenes subidas
+- **Severidad:** Alta (exposición de información)
+- **Corrección:** función `sinListado` en `servidor.go`
+- **Prueba de regresión:** `TestUploads_SinListado`
+- **Re-prueba:** pasa
+- **Estado:** Cerrado
+
+---
+
+### DEF-02 La prueba del login fallaba por un error no controlado
+
+- **Historia:** estructura inicial
+- **Encontrado en:** primera ejecución de `npm test`
+- **Entorno:** Vitest 5, jsdom
+- **Pasos:** ejecutar `npm test`
+- **Esperado:** la prueba "muestra el error de la API en una alerta" pasa
+- **Real:** falla con "Correo o clave incorrectos." aunque el componente sí captura el error
+- **Causa:** `beforeEach(() => iniciar.mockReset())` devolvía el mock, y Vitest trata el valor devuelto como función de limpieza; al terminar la prueba lo ejecutaba y lanzaba el error
+- **Severidad:** Baja (código de prueba, no afecta el producto)
+- **Corrección:** usar llaves en el `beforeEach` para no devolver nada
+- **Re-prueba:** pasa
+- **Estado:** Cerrado
