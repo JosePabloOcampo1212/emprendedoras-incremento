@@ -6,6 +6,7 @@ import (
 	"encoding/json"
 	"log"
 	"net/http"
+	"strings"
 
 	"github.com/JosePabloOcampo1212/emprendedoras-incremento/backend/internal/auth"
 )
@@ -33,9 +34,9 @@ func (s *Servidor) Rutas() http.Handler {
 	mux.HandleFunc("GET /api/sesion", s.requiereSesion(s.sesionActual))
 	mux.HandleFunc("DELETE /api/sesion", s.requiereSesion(s.cerrarSesion))
 
-	// TODO HU-01 Registrar producto (rol emprendedora)
-	//   POST /api/productos           -> s.requiereRol(auth.RolEmprendedora, s.crearProducto)
-	//   GET  /api/mis-productos       -> s.requiereRol(auth.RolEmprendedora, s.misProductos)
+	// HU-01 Registrar producto (rol emprendedora)
+	mux.HandleFunc("POST /api/productos", s.requiereRol(auth.RolEmprendedora, s.crearProducto))
+	mux.HandleFunc("GET /api/mis-productos", s.requiereRol(auth.RolEmprendedora, s.misProductos))
 
 	// TODO HU-02 Aprobar o rechazar (rol administradora)
 	//   GET  /api/admin/pendientes                 -> s.requiereRol(auth.RolAdministradora, ...)
@@ -46,7 +47,7 @@ func (s *Servidor) Rutas() http.Handler {
 	//   GET  /api/catalogo?categoria={id}
 
 	// Imágenes subidas (solo lectura)
-	mux.Handle("GET /uploads/", http.StripPrefix("/uploads/", http.FileServer(http.Dir(s.dirUploads))))
+	mux.Handle("GET /uploads/", sinListado(http.StripPrefix("/uploads/", http.FileServer(http.Dir(s.dirUploads)))))
 
 	return registrarPeticiones(cabecerasSeguridad(mux))
 }
@@ -78,6 +79,17 @@ func (s *Servidor) listarCategorias(w http.ResponseWriter, r *http.Request) {
 		lista = append(lista, c)
 	}
 	responderJSON(w, http.StatusOK, lista)
+}
+
+// sinListado evita que /uploads/ muestre la lista de todos los archivos.
+func sinListado(siguiente http.Handler) http.Handler {
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		if strings.HasSuffix(r.URL.Path, "/") {
+			http.NotFound(w, r)
+			return
+		}
+		siguiente.ServeHTTP(w, r)
+	})
 }
 
 // ---------- utilidades de respuesta ----------
