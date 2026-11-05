@@ -80,8 +80,10 @@ antes de la corrección y pasa después. Severidad: Crítica / Alta / Media / Ba
 - **Esperado:** sin errores
 - **Real:** `GET /api/sesion` responde 401 y el navegador lo muestra como error
 - **Severidad:** Baja
-- **Corrección:** _pendiente_
-- **Estado:** Abierto
+- **Corrección:** `GET /api/sesion` responde 204 cuando no hay sesión
+- **Prueba de regresión:** `TestSesion_SinCookieDa204`
+- **Re-prueba:** Lighthouse Buenas prácticas 100
+- **Estado:** Cerrado
 
 ---
 

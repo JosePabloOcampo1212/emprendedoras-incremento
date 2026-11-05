@@ -31,7 +31,7 @@ func (s *Servidor) Rutas() http.Handler {
 
 	// Sesión
 	mux.HandleFunc("POST /api/sesion", s.iniciarSesion)
-	mux.HandleFunc("GET /api/sesion", s.requiereSesion(s.sesionActual))
+	mux.HandleFunc("GET /api/sesion", s.sesionActual)
 	mux.HandleFunc("DELETE /api/sesion", s.requiereSesion(s.cerrarSesion))
 
 	// HU-01 Registrar producto (rol emprendedora)
