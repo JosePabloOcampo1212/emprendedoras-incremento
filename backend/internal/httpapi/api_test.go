@@ -135,10 +135,12 @@ func TestLogin_MismoMensajeParaCorreoOClaveIncorrectos(t *testing.T) {
 	}
 }
 
-func TestSesion_SinCookieDa401(t *testing.T) {
+// DEF-05 (regresión): sin sesión la consulta responde 204, no 401,
+// para no generar errores en la consola en cada visita.
+func TestSesion_SinCookieDa204(t *testing.T) {
 	_, ts := nuevoEntorno(t)
 	resp, _ := http.Get(ts.URL + "/api/sesion")
-	if resp.StatusCode != http.StatusUnauthorized {
+	if resp.StatusCode != http.StatusNoContent {
 		t.Fatalf("estado %d", resp.StatusCode)
 	}
 }
@@ -152,8 +154,12 @@ func TestCerrarSesion_InvalidaElToken(t *testing.T) {
 	if resp, _ := c.Do(req); resp.StatusCode != http.StatusNoContent {
 		t.Fatalf("estado %d al cerrar sesión", resp.StatusCode)
 	}
-	if resp, _ := c.Get(ts.URL + "/api/sesion"); resp.StatusCode != http.StatusUnauthorized {
-		t.Fatalf("después de cerrar sesión esperaba 401, obtuvo %d", resp.StatusCode)
+	if resp, _ := c.Get(ts.URL + "/api/sesion"); resp.StatusCode != http.StatusNoContent {
+		t.Fatalf("después de cerrar sesión esperaba 204, obtuvo %d", resp.StatusCode)
+	}
+	// y el token viejo ya no sirve para rutas protegidas
+	if resp, _ := c.Get(ts.URL + "/api/mis-productos"); resp.StatusCode != http.StatusUnauthorized {
+		t.Fatalf("token cerrado: esperaba 401 en ruta protegida, obtuvo %d", resp.StatusCode)
 	}
 }
 
