@@ -68,3 +68,30 @@ antes de la corrección y pasa después. Severidad: Crítica / Alta / Media / Ba
 - **Prueba de regresión:** `TestCatalogo_ETag`
 - **Re-prueba:** pasa; prueba punta a punta 12/12
 - **Estado:** Cerrado
+
+---
+
+### DEF-05 Error 401 en la consola en cada visita sin sesión
+
+- **Historia:** inicio de sesión
+- **Encontrado en:** Lighthouse (Buenas prácticas: 96, "errores en la consola")
+- **Entorno:** versión de producción, Lighthouse 12
+- **Pasos:** abrir el catálogo sin haber iniciado sesión y revisar la consola
+- **Esperado:** sin errores
+- **Real:** `GET /api/sesion` responde 401 y el navegador lo muestra como error
+- **Severidad:** Baja
+- **Corrección:** _pendiente_
+- **Estado:** Abierto
+
+---
+
+### DEF-06 robots.txt inválido
+
+- **Historia:** HU-03 (catálogo público)
+- **Encontrado en:** Lighthouse (SEO: 92)
+- **Pasos:** abrir `/robots.txt`
+- **Esperado:** archivo de texto con reglas válidas
+- **Real:** el servidor devuelve la página HTML de la aplicación
+- **Severidad:** Baja
+- **Corrección:** _pendiente_
+- **Estado:** Abierto
