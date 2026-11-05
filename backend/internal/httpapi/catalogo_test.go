@@ -137,11 +137,36 @@ func TestCatalogo_Rendimiento(t *testing.T) {
 	}
 }
 
-// El catálogo permite caché corta para ahorrar recursos.
-func TestCatalogo_CacheCorta(t *testing.T) {
+// DEF-04 (regresión): el catálogo usa ETag; si no cambió responde 304,
+// y después de aprobar un producto el ETag cambia y se recibe la lista nueva.
+func TestCatalogo_ETag(t *testing.T) {
 	_, ts := nuevoEntorno(t)
+
 	resp, _ := pedirCatalogo(t, ts.URL, "")
-	if resp.Header.Get("Cache-Control") != "public, max-age=30" {
-		t.Fatalf("Cache-Control inesperado: %q", resp.Header.Get("Cache-Control"))
+	etag := resp.Header.Get("ETag")
+	if etag == "" || resp.Header.Get("Cache-Control") != "no-cache" {
+		t.Fatalf("faltan cabeceras de caché: ETag=%q Cache-Control=%q", etag, resp.Header.Get("Cache-Control"))
+	}
+
+	pedirConEtag := func() *http.Response {
+		req, _ := http.NewRequest(http.MethodGet, ts.URL+"/api/catalogo", nil)
+		req.Header.Set("If-None-Match", etag)
+		r, err := http.DefaultClient.Do(req)
+		if err != nil {
+			t.Fatal(err)
+		}
+		r.Body.Close()
+		return r
+	}
+
+	if r := pedirConEtag(); r.StatusCode != http.StatusNotModified {
+		t.Fatalf("sin cambios: esperaba 304, obtuvo %d", r.StatusCode)
+	}
+
+	id := crearPendiente(t, ts.URL)
+	revisar(t, clienteLogueado(t, ts.URL, "admin@asociacion.test"), ts.URL, id, "aprobar", "")
+
+	if r := pedirConEtag(); r.StatusCode != http.StatusOK {
+		t.Fatalf("después de aprobar: esperaba 200 con datos nuevos, obtuvo %d", r.StatusCode)
 	}
 }
