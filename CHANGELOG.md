@@ -17,6 +17,7 @@ Versionado según [Semantic Versioning](https://semver.org/lang/es/).
 
 - Al cerrar sesión desde una página protegida ahora se muestra el catálogo (DEF-03).
 - El catálogo muestra los productos recién aprobados sin esperar a que venza la caché; usa validación con ETag (DEF-04).
+- La consulta de sesión responde 204 cuando no hay sesión, sin errores en la consola (DEF-05).
 
 ### Seguridad
 

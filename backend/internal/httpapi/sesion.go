@@ -51,8 +51,21 @@ func (s *Servidor) iniciarSesion(w http.ResponseWriter, r *http.Request) {
 	responderJSON(w, http.StatusOK, u)
 }
 
+// sesionActual responde 200 con el usuario, o 204 si no hay sesión.
+// No usa 401 porque la página lo consulta en cada visita, y un visitante
+// sin sesión es un caso normal, no un error (DEF-05).
 func (s *Servidor) sesionActual(w http.ResponseWriter, r *http.Request) {
-	responderJSON(w, http.StatusOK, usuarioDe(r))
+	c, err := r.Cookie(nombreCookie)
+	if err != nil {
+		w.WriteHeader(http.StatusNoContent)
+		return
+	}
+	u, ok := auth.UsuarioDeSesion(r.Context(), s.db, c.Value)
+	if !ok {
+		w.WriteHeader(http.StatusNoContent)
+		return
+	}
+	responderJSON(w, http.StatusOK, u)
 }
 
 func (s *Servidor) cerrarSesion(w http.ResponseWriter, r *http.Request) {
