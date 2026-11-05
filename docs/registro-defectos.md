@@ -3,6 +3,19 @@
 Cada defecto se corrige en su propia rama, con una prueba de regresión que falla
 antes de la corrección y pasa después. Severidad: Crítica / Alta / Media / Baja.
 
+## Resumen al cierre de la iteración
+
+| ID | Descripción | Severidad | Encontrado en | Rama de corrección | Estado |
+|---|---|---|---|---|---|
+| DEF-01 | `/uploads/` listaba los archivos | Alta | Revisión de código | `feature/HU-01-registro-producto` | Cerrado |
+| DEF-02 | Prueba de login fallaba por la limpieza del mock | Baja | `npm test` | `main` (estructura inicial) | Cerrado |
+| DEF-03 | Salir desde página protegida abría "Ingresar" | Media | Prueba punta a punta | `fix/DEF-03-salir-redirige` | Cerrado |
+| DEF-04 | Catálogo desactualizado después de aprobar | Media | Prueba punta a punta | `fix/DEF-04-cache-catalogo` | Cerrado |
+| DEF-05 | Error 401 en consola en cada visita | Baja | Lighthouse | `fix/DEF-05-06-lighthouse` | Cerrado |
+| DEF-06 | robots.txt inválido | Baja | Lighthouse | `fix/DEF-05-06-lighthouse` | Cerrado |
+
+Defectos críticos abiertos: 0.
+
 ---
 
 ### DEF-01 El directorio de imágenes mostraba la lista de archivos

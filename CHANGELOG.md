@@ -5,6 +5,10 @@ Versionado según [Semantic Versioning](https://semver.org/lang/es/).
 
 ## [Sin publicar]
 
+## [1.0.0] - 2026-11-05
+
+Primera versión del incremento: flujo completo de publicación de productos.
+
 ### Agregado
 
 - HU-01: registro de productos con validación en cliente y servidor, imagen opcional (JPG/PNG, máx. 2 MB) con texto alternativo obligatorio.
@@ -23,3 +27,12 @@ Versionado según [Semantic Versioning](https://semver.org/lang/es/).
 ### Seguridad
 
 - El directorio de imágenes no lista archivos (DEF-01).
+
+### Pendiente para la siguiente versión
+
+- HU-04: archivar y restaurar productos.
+- Edición de productos devueltos por la administración.
+- Paginación del catálogo (hoy muestra hasta 200 productos).
+
+[Sin publicar]: https://github.com/JosePabloOcampo1212/emprendedoras-incremento/compare/v1.0.0...HEAD
+[1.0.0]: https://github.com/JosePabloOcampo1212/emprendedoras-incremento/releases/tag/v1.0.0
