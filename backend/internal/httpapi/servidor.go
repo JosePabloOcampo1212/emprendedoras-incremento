@@ -38,10 +38,10 @@ func (s *Servidor) Rutas() http.Handler {
 	mux.HandleFunc("POST /api/productos", s.requiereRol(auth.RolEmprendedora, s.crearProducto))
 	mux.HandleFunc("GET /api/mis-productos", s.requiereRol(auth.RolEmprendedora, s.misProductos))
 
-	// TODO HU-02 Aprobar o rechazar (rol administradora)
-	//   GET  /api/admin/pendientes                 -> s.requiereRol(auth.RolAdministradora, ...)
-	//   POST /api/admin/productos/{id}/aprobar     -> s.requiereRol(auth.RolAdministradora, ...)
-	//   POST /api/admin/productos/{id}/rechazar    -> s.requiereRol(auth.RolAdministradora, ...)
+	// HU-02 Aprobar o rechazar (rol administradora)
+	mux.HandleFunc("GET /api/admin/pendientes", s.requiereRol(auth.RolAdministradora, s.listarPendientes))
+	mux.HandleFunc("POST /api/admin/productos/{id}/aprobar", s.requiereRol(auth.RolAdministradora, s.aprobarProducto))
+	mux.HandleFunc("POST /api/admin/productos/{id}/rechazar", s.requiereRol(auth.RolAdministradora, s.rechazarProducto))
 
 	// TODO HU-03 Catálogo público
 	//   GET  /api/catalogo?categoria={id}
