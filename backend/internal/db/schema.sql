@@ -52,3 +52,6 @@ CREATE TABLE IF NOT EXISTS historial_estados (
 CREATE INDEX IF NOT EXISTS idx_productos_estado ON productos(estado);
 CREATE INDEX IF NOT EXISTS idx_productos_usuario ON productos(usuario_id);
 CREATE INDEX IF NOT EXISTS idx_sesiones_expira ON sesiones(expira);
+
+-- HU-03: acelera el catálogo (filtra por estado y categoría, ordena por fecha)
+CREATE INDEX IF NOT EXISTS idx_productos_catalogo ON productos(estado, categoria_id, actualizado DESC);
