@@ -97,17 +97,19 @@ with sync_playwright() as p:
     page.keyboard.press("Tab")
     page.keyboard.type("2800")
     page.keyboard.press("Tab")
-    page.keyboard.press("ArrowDown")  # elige "Alimentos" en el select
+    # En macOS la flecha abre el menú nativo del select en vez de cambiar la opción;
+    # se elige sobre el campo que ya tiene el foco, sin usar el mouse.
+    page.locator(":focus").select_option(label="Alimentos")
     page.get_by_label("Imagen (opcional)").set_input_files(IMAGEN)
     page.get_by_label("Descripción de la imagen").focus()
     page.keyboard.type("Frasco de mermelada morada con tapa de tela")
-    page.keyboard.press("Tab")
-    enfocado = page.evaluate("document.activeElement.textContent")
+    # Enter en el último campo envía el formulario (en macOS Tab no siempre llega a los botones)
+    enfocado = page.evaluate("document.activeElement.name")
     page.keyboard.press("Enter")
     expect(page.get_by_role("status")).to_contain_text("Producto enviado a revisión")
     expect(page.get_by_text("Mermelada de mora con chile", exact=True)).to_be_visible()
     page.screenshot(path=CAP + "04-registro-exito.png", full_page=True)
-    paso("HU-01 CA2/CA4: registro completado con teclado, queda 'En revisión'", True, f"botón con foco: {enfocado}")
+    paso("HU-01 CA2/CA4: registro completado con teclado, queda 'En revisión'", True, f"Enter en el campo: {enfocado}")
     salir(page)
 
     # 5. Administradora: pendientes
