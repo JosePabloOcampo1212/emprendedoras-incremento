@@ -67,9 +67,11 @@ el valor de `SEED_CLAVE` en el `.env`.
 ## Pruebas
 
 ```bash
-cd backend && go test ./...          # unitarias + integración
-cd backend && go test -cover ./...   # con cobertura
-cd frontend && npm test              # componentes
+cd backend && go test ./...                                   # unitarias + integración
+cd backend && go test -coverpkg=./internal/... -cover ./...   # con cobertura total
+cd backend && go test -short ./...                            # sin la prueba de rendimiento
+cd frontend && npm test                                       # componentes y accesibilidad
+cd frontend && npm run test:cobertura                         # con cobertura
 ```
 
 Las pruebas de integración necesitan PostgreSQL encendido. Cada prueba crea
@@ -106,10 +108,9 @@ docker-compose.yml    PostgreSQL para desarrollo
 |---|---|---|
 | HU-01 | Registrar producto | Hecho |
 | HU-02 | Aprobar o rechazar producto | Hecho |
-| HU-03 | Ver catálogo público | Pendiente |
+| HU-03 | Ver catálogo público | Hecho |
 | HU-04 | Archivar producto | Fuera de esta iteración (backlog) |
 
-Las partes por implementar están marcadas en el código con `TODO HU-0X`.
 
 ## Flujo de trabajo con Git
 
