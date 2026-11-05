@@ -34,3 +34,20 @@ antes de la corrección y pasa después. Severidad: Crítica / Alta / Media / Ba
 - **Corrección:** usar llaves en el `beforeEach` para no devolver nada
 - **Re-prueba:** pasa
 - **Estado:** Cerrado
+
+---
+
+### DEF-03 Al cerrar sesión desde una página protegida se abría "Ingresar"
+
+- **Historia:** inicio de sesión (afecta HU-01 y HU-02)
+- **Encontrado en:** prueba funcional de punta a punta (`pruebas/e2e/flujo.py`, paso 5)
+- **Entorno:** versión de producción en `localhost:4173`, Chrome
+- **Pasos:** ingresar como emprendedora → "Mis productos" → "Salir"
+- **Esperado:** se muestra el catálogo
+- **Real:** se muestra la página "Ingresar"
+- **Causa:** al borrar la sesión antes de navegar, `RutaProtegida` detecta que no hay usuario y redirige a `/ingresar` antes de que se ejecute la navegación al catálogo
+- **Severidad:** Media
+- **Corrección:** en `App.jsx`, navegar al catálogo primero y cerrar la sesión después
+- **Prueba de regresión:** `App.test.jsx` ("desde Mis productos lleva al catálogo"); se verificó que falla sin la corrección
+- **Re-prueba:** pasa; prueba punta a punta 12/12
+- **Estado:** Cerrado

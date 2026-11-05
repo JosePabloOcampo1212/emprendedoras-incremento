@@ -10,9 +10,11 @@ export default function App() {
   const { usuario, cerrar } = useSesion()
   const navegar = useNavigate()
 
+  // Primero se sale de la página protegida y luego se cierra la sesión.
+  // Al revés, RutaProtegida detecta que ya no hay usuario y manda a /ingresar (DEF-03).
   async function salir() {
-    await cerrar()
     navegar('/')
+    await cerrar()
   }
 
   return (
