@@ -9,8 +9,8 @@ export class ErrorApi extends Error {
   }
 }
 
-async function pedir(ruta, { metodo = 'GET', cuerpo, formulario } = {}) {
-  const opciones = { method: metodo, credentials: 'same-origin', headers: {} }
+async function pedir(ruta, { metodo = 'GET', cuerpo, formulario, signal } = {}) {
+  const opciones = { method: metodo, credentials: 'same-origin', headers: {}, signal }
 
   if (formulario) {
     opciones.body = formulario // FormData: el navegador pone el Content-Type
@@ -22,7 +22,8 @@ async function pedir(ruta, { metodo = 'GET', cuerpo, formulario } = {}) {
   let resp
   try {
     resp = await fetch(ruta, opciones)
-  } catch {
+  } catch (err) {
+    if (err.name === 'AbortError') throw err // petición cancelada a propósito
     throw new ErrorApi('No se pudo conectar con el servidor.', 0)
   }
 
@@ -50,5 +51,7 @@ export const api = {
   aprobar: (id) => pedir(`/api/admin/productos/${id}/aprobar`, { metodo: 'POST', cuerpo: {} }),
   rechazar: (id, motivo) => pedir(`/api/admin/productos/${id}/rechazar`, { metodo: 'POST', cuerpo: { motivo } }),
 
-  // TODO HU-03: catalogo(categoriaId)
+  // HU-03
+  catalogo: (categoriaId, signal) =>
+    pedir(categoriaId ? `/api/catalogo?categoria=${encodeURIComponent(categoriaId)}` : '/api/catalogo', { signal }),
 }
