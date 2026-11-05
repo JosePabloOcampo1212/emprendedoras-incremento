@@ -51,3 +51,20 @@ antes de la corrección y pasa después. Severidad: Crítica / Alta / Media / Ba
 - **Prueba de regresión:** `App.test.jsx` ("desde Mis productos lleva al catálogo"); se verificó que falla sin la corrección
 - **Re-prueba:** pasa; prueba punta a punta 12/12
 - **Estado:** Cerrado
+
+---
+
+### DEF-04 El catálogo seguía mostrando datos viejos después de aprobar
+
+- **Historia:** HU-03
+- **Encontrado en:** prueba funcional de punta a punta (paso 8)
+- **Entorno:** versión de producción en `localhost:4173`, Chrome
+- **Pasos:** abrir el catálogo → aprobar un producto como administradora → volver al catálogo
+- **Esperado:** el producto aprobado aparece
+- **Real:** el navegador mostraba la lista anterior hasta por 30 segundos
+- **Causa:** la respuesta del catálogo tenía `Cache-Control: public, max-age=30`
+- **Severidad:** Media
+- **Corrección:** `Cache-Control: no-cache` con `ETag`; si el catálogo no cambió, el servidor responde 304 sin cuerpo
+- **Prueba de regresión:** `TestCatalogo_ETag`
+- **Re-prueba:** pasa; prueba punta a punta 12/12
+- **Estado:** Cerrado

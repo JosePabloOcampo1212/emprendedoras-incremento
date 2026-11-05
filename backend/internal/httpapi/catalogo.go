@@ -3,6 +3,9 @@ package httpapi
 // HU-03 Catálogo público (sin sesión).
 
 import (
+	"crypto/sha256"
+	"encoding/hex"
+	"encoding/json"
 	"net/http"
 	"strconv"
 
@@ -48,8 +51,23 @@ func (s *Servidor) catalogo(w http.ResponseWriter, r *http.Request) {
 		})
 	}
 
-	// El catálogo es público y cambia poco: se permite caché corta en el navegador
-	// para ahorrar consultas y datos móviles.
-	w.Header().Set("Cache-Control", "public, max-age=30")
-	responderJSON(w, http.StatusOK, salida)
+	// Caché con validación (ETag): el navegador siempre pregunta, pero si el catálogo
+	// no cambió recibe 304 sin cuerpo y ahorra datos. Antes se usaba max-age=30 y el
+	// catálogo quedaba desactualizado hasta 30 s después de aprobar un producto (DEF-04).
+	cuerpo, err := json.Marshal(salida)
+	if err != nil {
+		errorInterno(w, err)
+		return
+	}
+	suma := sha256.Sum256(cuerpo)
+	etag := `"` + hex.EncodeToString(suma[:8]) + `"`
+
+	w.Header().Set("Cache-Control", "no-cache")
+	w.Header().Set("ETag", etag)
+	if r.Header.Get("If-None-Match") == etag {
+		w.WriteHeader(http.StatusNotModified)
+		return
+	}
+	w.Header().Set("Content-Type", "application/json; charset=utf-8")
+	w.Write(cuerpo)
 }
