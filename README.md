@@ -98,7 +98,8 @@ frontend/
   src/components/     componentes reutilizables (Campo accesible, RutaProtegida)
   src/pages/          páginas
   src/validaciones.js reglas de validación del cliente
-docs/                 historias de usuario, DoR/DoD, bitácora
+docs/                 historias de usuario, DoR/DoD, bitácora, gestión de contenidos
+scripts/              respaldo y restauración de la base de datos e imágenes
 docker-compose.yml    PostgreSQL para desarrollo
 ```
 
@@ -120,6 +121,16 @@ docker-compose.yml    PostgreSQL para desarrollo
   `HU-01: valida precio en el formulario (#3)`.
 - Cada historia entra a `main` por pull request con la plantilla de revisión.
 - Al cerrar la iteración se crea la etiqueta `v1.0.0` con sus notas de versión.
+
+## Respaldo y restauración
+
+```bash
+./scripts/respaldo.sh                                   # crea respaldos/bd-*.dump e imagenes-*.tar.gz
+./scripts/restaurar.sh respaldos/bd-AAAAMMDD-HHMMSS.dump   # restaura (pide confirmación)
+```
+
+Se conservan los últimos 7 respaldos. El procedimiento completo está en
+`docs/gestion-contenidos.md`.
 
 ## Seguridad y privacidad
 
